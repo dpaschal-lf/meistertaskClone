@@ -13,7 +13,7 @@ class SwimLane extends Component{
 		return this.props.laneData.map( (itemData, index)=> <SwimItem transferCallback={this.props.transferLaneCallback} itemIndex={index} laneIndex={this.props.lane} key={index} data={itemData} />);
 	}
 	handleAddItem(){
-		this.props.addCallback( this.props.lane );
+		this.props.addStartCallback( this.props.lane );
 	}
 	render(){
 		return (
