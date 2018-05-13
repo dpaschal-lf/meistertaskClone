@@ -1,0 +1,36 @@
+.swimItem{
+	height: 20%;
+	border: 1px solid black;
+	box-sizing: border-box;
+	background-color: pink;
+	position: relative;
+}
+.swimItem:nth-child(even){
+	background-color: lightblue;
+}
+
+.swimItem .title{
+	font-weight: bold;
+}
+.swimItem .note{
+	font-size: 80%;
+	color: darkgrey;
+}
+.swimItem .itemNav{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.swimItem .itemNav nav{
+	background-color: grey;
+	color: white;
+	line-height: 120%;
+	padding: 5%;
+	cursor: pointer;
+}
+.swimItem .itemNav nav:first-child{
+	float: left;
+}
+.swimItem .itemNav nav:last-child{
+	float: right;
+}
