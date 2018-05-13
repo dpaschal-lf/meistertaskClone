@@ -5,3 +5,17 @@
 	border: 1px solid black;
 	height: 100%;
 }
+
+.swimLane .add{
+	border-radius: 50%;
+	background-color: lightgreen;
+	padding: 5%;
+	height: 5vmin;
+	width: 5vmin;
+	margin: 0 auto;
+	display: block;
+	cursor: pointer;
+}
+.swimLane .add:hover{
+	background-color: white;
+}
