@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import SwimLane from './components/swimlane/swimlane.js';
+import AddItem from  './components/additem/additem';
 
 
 class App extends Component {
@@ -24,13 +25,16 @@ class App extends Component {
     			{title: 'title3-0', note: 'note3-0'},
     			{title: 'title3-1', note: 'note3-1'}
     		],
-    	]
+    	],
+    	addItemShow: false,
+    	addLane: null
     }
     this.transferLanes = this.transferLanes.bind(this);
-    this.addItem = this.addItem.bind(this);
+    this.addItemStart = this.addItemStart.bind(this);
+    this.addItemCommit = this.addItemCommit.bind(this);
+
   }
   transferLanes( lane, itemIndex, desiredLane){
-  	debugger;
   	console.log( `transfering ${lane}-${itemIndex} to ${desiredLane}`);
   	if(desiredLane<0 || desiredLane>= this.state.lanes.length){
   		console.error('out of lane bounds');
@@ -41,23 +45,33 @@ class App extends Component {
   	newLaneData[desiredLane].push( movingItem );
   	this.setState( { lanes: newLaneData });
   }
-  addItem( intendedLane ){
-  	console.log('adding item to '+ intendedLane)
-	const title = prompt('what is the item\'s title');
-	const note = prompt('what is the item\'s note');
-	const task = { title, note };
+  addItemStart( intendedLane ){
+  	this.setState({
+  		addItemShow: true,
+  		addLane: intendedLane
+  	})
+  }
+  addItemCommit( title, note, lane ){
+  	console.log(`title: ${title}, note: ${note}, lane: ${lane}`);
+  	const task = {
+  		title, note
+  	}
 	const lanes = this.state.lanes.slice();
-	lanes[ intendedLane ].push(task);
-	this.setState( { lanes });
+	lanes[ lane ].push(task);
+	this.setState( { 
+		lanes,
+		addItemShow: false
+	});
   }
   createLanes(){
-    return this.state.lanes.map( (lane, index) => <SwimLane addCallback={this.addItem} transferLaneCallback={this.transferLanes} laneData={lane} key={index} lane={index}/> );
+    return this.state.lanes.map( (lane, index) => <SwimLane addCommitCallback={this.addItemCommit}  addStartCallback={this.addItemStart} transferLaneCallback={this.transferLanes} laneData={lane} key={index} lane={index}/> );
   }
   render() {
 
     return (
       <div className="App">
       	{ this.createLanes() }
+      	{ this.state.addItemShow ? <AddItem lane={this.state.addLane} addHandler={this.addItemCommit}/> : ''}
       </div>
     );
   }
